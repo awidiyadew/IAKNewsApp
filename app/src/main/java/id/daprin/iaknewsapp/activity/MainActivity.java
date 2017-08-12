@@ -37,10 +37,6 @@ public class MainActivity extends AppCompatActivity {
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
-        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
-
-        throw new RuntimeException();
     }
 
     private List<ArticlesItem> GetDummyArticlesItem(){
