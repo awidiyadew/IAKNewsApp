@@ -36,6 +36,16 @@
             android:paddingTop="16dp"
             android:maxLines="5"
             android:ellipsize="end"/>
+
+        <Button
+            android:id="@+id/btnReadMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/read_more"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            style="?attr/buttonBarPositiveButtonStyle"/>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

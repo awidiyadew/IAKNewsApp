@@ -42,6 +42,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         return articlesItemList.size();
     }
 
+    public void setData(List<ArticlesItem> datas){
+        this.articlesItemList.clear();
+        articlesItemList.addAll(datas);
+        notifyDataSetChanged();
+    }
+
     //View Holder untuk adapter
     public static class NewsViewHolder extends RecyclerView.ViewHolder{
 

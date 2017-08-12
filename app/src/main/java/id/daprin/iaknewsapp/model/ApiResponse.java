@@ -18,4 +18,39 @@ public class ApiResponse{
 
 	@SerializedName("status")
 	private String status;
+
+	public ApiResponse() {
+	}
+
+	public String getSortBy() {
+		return sortBy;
+	}
+
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public List<ArticlesItem> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<ArticlesItem> articles) {
+		this.articles = articles;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
