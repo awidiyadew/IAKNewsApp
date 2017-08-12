@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
+
         //SETUP ADAPTER
         mAdapter = new NewsAdapter(GetDummyArticlesItem());
 
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+
+        throw new RuntimeException();
     }
 
     private List<ArticlesItem> GetDummyArticlesItem(){
