@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +18,9 @@ import id.daprin.iaknewsapp.R;
 import id.daprin.iaknewsapp.model.ArticlesItem;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder>{
-    List<ArticlesItem> articlesItemList;
+
+    private List<ArticlesItem> articlesItemList;
+    private NewsClickListener mNewsClickListener;
 
     public NewsAdapter(List<ArticlesItem> articlesItemList) {
         this.articlesItemList = articlesItemList;
@@ -31,9 +34,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     @Override
-    public void onBindViewHolder(NewsViewHolder holder, int position)
-    {
+    public void onBindViewHolder(NewsViewHolder holder, final int position) {
         holder.bind(articlesItemList.get(position));
+        holder.btnReadMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNewsClickListener != null){
+                    mNewsClickListener.onItemNewsClicked(
+                            articlesItemList.get(position)
+                    );
+                }
+            }
+        });
     }
 
     @Override
@@ -48,12 +60,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         notifyDataSetChanged();
     }
 
+    public void setItemClickListener(NewsClickListener clickListener){
+        if (clickListener != null){
+            mNewsClickListener = clickListener;
+        }
+    }
+
     //View Holder untuk adapter
     public static class NewsViewHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.ivNewsPhoto) ImageView ivNewsPhoto;
         @BindView(R.id.tvDescription) TextView tvDescription;
         @BindView(R.id.tvNewsTitle) TextView tvNewsTitle;
+        @BindView(R.id.btnReadMore) Button btnReadMore;
 
         public NewsViewHolder(View itemView)
         {
@@ -67,6 +86,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             Glide.with(ivNewsPhoto.getContext())
                     .load(newsItem.getUrlToImage())
                     .into(ivNewsPhoto);
+
         }
     }
 }

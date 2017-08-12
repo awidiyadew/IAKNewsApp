@@ -1,7 +1,7 @@
 package id.daprin.iaknewsapp.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import id.daprin.iaknewsapp.BuildConfig;
 import id.daprin.iaknewsapp.R;
 import id.daprin.iaknewsapp.adapter.NewsAdapter;
+import id.daprin.iaknewsapp.adapter.NewsClickListener;
 import id.daprin.iaknewsapp.model.ApiResponse;
 import id.daprin.iaknewsapp.model.ArticlesItem;
 import id.daprin.iaknewsapp.rest.ApiClient;
@@ -23,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NewsClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     /*Recycler view perlu: VIewHolder, Adapter, LayoutManager */
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         //SETUP ADAPTER
         mAdapterDummy = new NewsAdapter(GetDummyArticlesItem());
         mAdapterApi = new NewsAdapter(mListArticle);
+
+        mAdapterApi.setItemClickListener(this);
 
         //SETUP RECYCLERVIEW
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -93,4 +96,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onItemNewsClicked(ArticlesItem newsItem) {
+        DetailActivity.start(this, newsItem.toJson());
+    }
+
 }

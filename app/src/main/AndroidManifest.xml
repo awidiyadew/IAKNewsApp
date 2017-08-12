@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.TesActivity" />
+        <activity android:name=".activity._DetailActivity" />
         <activity android:name=".activity.DetailActivity"></activity>
     </application>
 
