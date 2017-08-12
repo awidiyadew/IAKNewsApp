@@ -13,7 +13,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.daprin.iaknewsapp.R;
 import id.daprin.iaknewsapp.adapter.NewsAdapter;
+import id.daprin.iaknewsapp.model.ApiResponse;
 import id.daprin.iaknewsapp.model.ArticlesItem;
+import id.daprin.iaknewsapp.rest.ApiClient;
+import id.daprin.iaknewsapp.rest.ApiService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,13 +28,14 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager mLinearLayoutManager;
     NewsAdapter mAdapter;
 
+    private static final String NEWS_SOURCE = "techcrunch";
+    private static final String API_KEY = "b57fb509ead443aa9b26a35f23fbbb4b";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-
 
         //SETUP ADAPTER
         mAdapter = new NewsAdapter(GetDummyArticlesItem());
@@ -37,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+
     }
 
     private List<ArticlesItem> GetDummyArticlesItem(){
@@ -49,5 +58,25 @@ public class MainActivity extends AppCompatActivity {
             result.add(item);
         }
         return result;
+    }
+
+    private void getData(){
+        ApiService apiService = ApiClient.getRetrofitClient().create(ApiService.class);
+        Call<ApiResponse> apiResponseCall = apiService.getArticle(
+            NEWS_SOURCE,
+                API_KEY
+        );
+
+        apiResponseCall.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+            }
+        });
     }
 }
