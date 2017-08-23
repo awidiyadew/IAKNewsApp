@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">IAKNewsApp</string>
     <string name="read_more">Read More</string>
+    <string name="actiobar_detail_title">Detail News</string>
 </resources>
