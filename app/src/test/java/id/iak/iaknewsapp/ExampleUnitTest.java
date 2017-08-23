@@ -1,4 +1,4 @@
-package id.daprin.iaknewsapp;
+package id.iak.iaknewsapp;
 
 import org.junit.Test;
 

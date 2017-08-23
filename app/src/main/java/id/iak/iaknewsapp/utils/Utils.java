@@ -1,4 +1,4 @@
-package id.daprin.iaknewsapp.utils;
+package id.iak.iaknewsapp.utils;
 
 
 import android.content.Context;

@@ -1,4 +1,4 @@
-package id.daprin.iaknewsapp.activity;
+package id.iak.iaknewsapp.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +12,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import id.daprin.iaknewsapp.BuildConfig;
-import id.daprin.iaknewsapp.R;
-import id.daprin.iaknewsapp.adapter.NewsAdapter;
-import id.daprin.iaknewsapp.adapter.NewsClickListener;
-import id.daprin.iaknewsapp.model.ApiResponse;
-import id.daprin.iaknewsapp.model.ArticlesItem;
-import id.daprin.iaknewsapp.rest.ApiClient;
-import id.daprin.iaknewsapp.rest.ApiService;
+import id.iak.iaknewsapp.BuildConfig;
+import id.iak.iaknewsapp.R;
+import id.iak.iaknewsapp.adapter.NewsAdapter;
+import id.iak.iaknewsapp.adapter.NewsClickListener;
+import id.iak.iaknewsapp.model.ApiResponse;
+import id.iak.iaknewsapp.model.ArticlesItem;
+import id.iak.iaknewsapp.rest.ApiClient;
+import id.iak.iaknewsapp.rest.ApiService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements NewsClickListener
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         //mRecyclerView.setAdapter(mAdapterDummy);
         mRecyclerView.setAdapter(mAdapterApi);
-
         getData();
     }
 
@@ -75,9 +74,7 @@ public class MainActivity extends AppCompatActivity implements NewsClickListener
                 NEWS_SOURCE,
                 BuildConfig.API_KEY
         );
-
         Log.d(TAG, "getData: API_KEY " + BuildConfig.API_KEY);
-
         apiResponseCall.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

@@ -1,4 +1,4 @@
-package id.daprin.iaknewsapp.model;
+package id.iak.iaknewsapp.model;
 
 import com.google.gson.annotations.SerializedName;
 

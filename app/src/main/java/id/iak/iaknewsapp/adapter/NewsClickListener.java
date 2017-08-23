@@ -1,7 +1,7 @@
-package id.daprin.iaknewsapp.adapter;
+package id.iak.iaknewsapp.adapter;
 
 
-import id.daprin.iaknewsapp.model.ArticlesItem;
+import id.iak.iaknewsapp.model.ArticlesItem;
 
 public interface NewsClickListener {
     void onItemNewsClicked(ArticlesItem newsItem);

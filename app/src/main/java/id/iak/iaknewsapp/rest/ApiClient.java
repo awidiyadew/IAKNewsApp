@@ -1,4 +1,4 @@
-package id.daprin.iaknewsapp.rest;
+package id.iak.iaknewsapp.rest;
 
 
 import retrofit2.Retrofit;

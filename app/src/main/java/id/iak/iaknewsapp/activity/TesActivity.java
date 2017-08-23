@@ -1,4 +1,4 @@
-package id.daprin.iaknewsapp.activity;
+package id.iak.iaknewsapp.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.webkit.WebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import id.daprin.iaknewsapp.R;
+import id.iak.iaknewsapp.R;
 
 public class TesActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package id.daprin.iaknewsapp;
+package id.iak.iaknewsapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

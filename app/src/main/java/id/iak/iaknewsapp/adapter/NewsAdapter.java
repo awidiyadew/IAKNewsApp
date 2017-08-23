@@ -1,4 +1,4 @@
-package id.daprin.iaknewsapp.adapter;
+package id.iak.iaknewsapp.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +14,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import id.daprin.iaknewsapp.R;
-import id.daprin.iaknewsapp.model.ArticlesItem;
+import id.iak.iaknewsapp.R;
+import id.iak.iaknewsapp.model.ArticlesItem;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder>{
 

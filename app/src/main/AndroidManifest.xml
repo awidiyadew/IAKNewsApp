@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="id.daprin.iaknewsapp">
+    package="id.iak.iaknewsapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,16 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name="id.iak.iaknewsapp.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.TesActivity" />
-        <activity android:name=".activity._DetailActivity" />
-        <activity android:name=".activity.DetailActivity"></activity>
+        <activity android:name="id.iak.iaknewsapp.activity.TesActivity" />
+        <activity android:name="id.iak.iaknewsapp.activity._DetailActivity" />
+        <activity android:name="id.iak.iaknewsapp.activity.DetailActivity"></activity>
     </application>
 
 </manifest>

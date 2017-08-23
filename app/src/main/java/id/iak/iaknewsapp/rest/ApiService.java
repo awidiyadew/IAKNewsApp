@@ -1,7 +1,7 @@
-package id.daprin.iaknewsapp.rest;
+package id.iak.iaknewsapp.rest;
 
 
-import id.daprin.iaknewsapp.model.ApiResponse;
+import id.iak.iaknewsapp.model.ApiResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
