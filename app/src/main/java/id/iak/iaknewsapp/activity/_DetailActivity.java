@@ -29,8 +29,8 @@ public class _DetailActivity extends AppCompatActivity {
     }
 
     private void initWebView() {
-        //mWebView.setWebChromeClient(new MyWebChromeClient(this));
-        /*mWebView.setWebViewClient(new WebViewClient() {
+        //webView.setWebChromeClient(new MyWebChromeClient(this));
+        /*webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
@@ -65,7 +65,7 @@ public class _DetailActivity extends AppCompatActivity {
         mWebView.clearHistory();
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setHorizontalScrollBarEnabled(false);
-        /*mWebView.setOnTouchListener(new View.OnTouchListener() {
+        /*webView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
 
                 if (event.getPointerCount() > 1) {

@@ -3,13 +3,18 @@ package id.iak.iaknewsapp.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -19,7 +24,8 @@ import id.iak.iaknewsapp.model.ArticlesItem;
 
 public class DetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.webView) WebView mWebView;
+    @BindView(R.id.webView) WebView webView;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     private static final String KEY_EXTRA_NEWS = "news";
     private ArticlesItem mArticlesItem;
@@ -45,19 +51,21 @@ public class DetailActivity extends AppCompatActivity {
 
         String newsJson = getIntent().getStringExtra(KEY_EXTRA_NEWS);
         mArticlesItem = new ArticlesItem().fromJson(newsJson);
-        Toast.makeText(this, "Show news " + mArticlesItem.getTitle(), Toast.LENGTH_SHORT).show();
-        setupWebView();
-        mWebView.loadUrl(mArticlesItem.getUrl());
-        setupActionBar();
 
+        setupWebView();
+        webView.loadUrl(mArticlesItem.getUrl());
+
+        setupActionBar();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home){
             finish();
+            return true;
         }
-        return true;
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupActionBar(){
@@ -77,11 +85,32 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setupWebView(){
-        mWebView.clearCache(true);
-        mWebView.clearHistory();
-        mWebView.setHorizontalScrollBarEnabled(false);
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.setHorizontalScrollBarEnabled(false);
 
-        WebSettings webViewSetting = mWebView.getSettings();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    String x = String.valueOf(scrollX);
+                    String y = String.valueOf(scrollY);
+                    Log.d("Scroll", "onScrollChange: x=" + x + " y=" + y);
+                }
+            });
+        }
+
+        progressBar.setMax(100);
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                progressBar.setProgress(newProgress);
+                progressBar.setVisibility(newProgress == 100 ? View.GONE : View.VISIBLE);
+            }
+        });
+
+        WebSettings webViewSetting = webView.getSettings();
 
         // enable zoom
         webViewSetting.setSupportZoom(true);
