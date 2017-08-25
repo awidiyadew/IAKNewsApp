@@ -1,11 +1,13 @@
 package id.iak.iaknewsapp.local;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import id.iak.iaknewsapp.local.DbContract.NewsItemContract;
+import id.iak.iaknewsapp.model.ArticlesItem;
 
 public class DbOpenHelper extends SQLiteOpenHelper {
 
@@ -39,6 +41,20 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DROP_TABLE_NEWS);
         onCreate(db);
+    }
+
+    public long saveNewsItem(ArticlesItem newsItem){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(NewsItemContract.URL, newsItem.getUrl());
+        cv.put(NewsItemContract.TITLE, newsItem.getTitle());
+        cv.put(NewsItemContract.DESC, newsItem.getDescription());
+        cv.put(NewsItemContract.IMG_URL, newsItem.getUrlToImage());
+        cv.put(NewsItemContract.AUTHOR, newsItem.getAuthor());
+        cv.put(NewsItemContract.PUBLISH_AT, newsItem.getPublishedAt());
+
+        return db.insert(NewsItemContract.TABLE_NAME, null, cv);
     }
 
 }
