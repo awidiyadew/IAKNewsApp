@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -29,6 +30,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.fabFavorite) FloatingActionButton fabFavorite;
     @BindView(R.id.nestedScrollView) NestedScrollView nestedScrollView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     private static final String KEY_EXTRA_NEWS = "news";
     private ArticlesItem mArticlesItem;
@@ -73,6 +75,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setupActionBar(){
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
             actionBar.setTitle(R.string.actiobar_detail_title);
