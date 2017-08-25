@@ -89,7 +89,7 @@ public class DetailActivity extends AppCompatActivity {
         webView.clearHistory();
         webView.setHorizontalScrollBarEnabled(false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -98,7 +98,7 @@ public class DetailActivity extends AppCompatActivity {
                     Log.d("Scroll", "onScrollChange: x=" + x + " y=" + y);
                 }
             });
-        }
+        }*/
 
         progressBar.setMax(100);
         webView.setWebChromeClient(new WebChromeClient(){
