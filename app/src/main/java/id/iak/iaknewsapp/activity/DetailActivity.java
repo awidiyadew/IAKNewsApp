@@ -34,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String KEY_EXTRA_NEWS = "news";
     private ArticlesItem mArticlesItem;
+    private boolean mIsNewsSaved = false;
 
     // method untuk memulai DetailActivity
     public static void start(Context context, String newsJson){
@@ -104,6 +105,14 @@ public class DetailActivity extends AppCompatActivity {
                         fabFavorite.show();
                     }
                 }
+            }
+        });
+
+        fabFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabFavorite.setImageResource(mIsNewsSaved ? R.drawable.ic_action_love_full : R.drawable.ic_action_love_empty);
+                mIsNewsSaved = !mIsNewsSaved;
             }
         });
     }
