@@ -3,12 +3,12 @@ package id.iak.iaknewsapp.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -24,8 +24,11 @@ import id.iak.iaknewsapp.model.ArticlesItem;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private static final String TAG = DetailActivity.class.getSimpleName();
     @BindView(R.id.webView) WebView webView;
     @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.fabFavorite) FloatingActionButton fabFavorite;
+    @BindView(R.id.nestedScrollView) NestedScrollView nestedScrollView;
 
     private static final String KEY_EXTRA_NEWS = "news";
     private ArticlesItem mArticlesItem;
@@ -56,6 +59,7 @@ public class DetailActivity extends AppCompatActivity {
         webView.loadUrl(mArticlesItem.getUrl());
 
         setupActionBar();
+        setupFab();
     }
 
     @Override
@@ -84,21 +88,27 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    private void setupFab(){
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY){
+                    if (fabFavorite.isShown()){
+                        fabFavorite.hide();
+                    }
+                } else {
+                    if (!fabFavorite.isShown()){
+                        fabFavorite.show();
+                    }
+                }
+            }
+        });
+    }
+
     private void setupWebView(){
         webView.clearCache(true);
         webView.clearHistory();
         webView.setHorizontalScrollBarEnabled(false);
-
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    String x = String.valueOf(scrollX);
-                    String y = String.valueOf(scrollY);
-                    Log.d("Scroll", "onScrollChange: x=" + x + " y=" + y);
-                }
-            });
-        }*/
 
         progressBar.setMax(100);
         webView.setWebChromeClient(new WebChromeClient(){
