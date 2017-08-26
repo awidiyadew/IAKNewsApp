@@ -3,6 +3,7 @@ package id.iak.iaknewsapp.local;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -54,7 +55,37 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         cv.put(NewsItemContract.AUTHOR, newsItem.getAuthor());
         cv.put(NewsItemContract.PUBLISH_AT, newsItem.getPublishedAt());
 
+        db.close();
+
         return db.insert(NewsItemContract.TABLE_NAME, null, cv);
+    }
+
+    public boolean deleteNewsItem(String newsUrl){
+        SQLiteDatabase db = getReadableDatabase();
+        String whereClause = NewsItemContract.URL + "=?";
+        String[] whereArgs = new String[]{ newsUrl };
+        int rowEffected = db.delete(NewsItemContract.TABLE_NAME, whereClause, whereArgs);
+
+        db.close();
+
+        return rowEffected > 0;
+    }
+
+    public boolean isNewsSavedAsFavorite(String newsUrl){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(
+                NewsItemContract.TABLE_NAME,
+                null,
+                NewsItemContract.URL + "=?",
+                new String[]{ newsUrl },
+                null,
+                null,
+                null
+        );
+
+        int totalRow = cursor.getCount();
+        db.close();
+        return totalRow > 0;
     }
 
 }
