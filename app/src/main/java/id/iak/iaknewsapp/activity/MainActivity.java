@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NewsClickListener
 
     @Override
     public void onItemNewsClicked(ArticlesItem newsItem) {
-        DetailActivity.start(this, newsItem.toJson());
+        DetailActivity.start(this, newsItem);
     }
 
 }
