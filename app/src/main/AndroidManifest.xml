@@ -18,10 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="id.iak.iaknewsapp.activity.TesActivity" />
-        <activity android:name="id.iak.iaknewsapp.activity._DetailActivity" />
         <activity android:name="id.iak.iaknewsapp.activity.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
