@@ -55,9 +55,10 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         cv.put(NewsItemContract.AUTHOR, newsItem.getAuthor());
         cv.put(NewsItemContract.PUBLISH_AT, newsItem.getPublishedAt());
 
+        long rowId = db.insert(NewsItemContract.TABLE_NAME, null, cv);
         db.close();
 
-        return db.insert(NewsItemContract.TABLE_NAME, null, cv);
+        return rowId;
     }
 
     public boolean deleteNewsItem(String newsUrl){

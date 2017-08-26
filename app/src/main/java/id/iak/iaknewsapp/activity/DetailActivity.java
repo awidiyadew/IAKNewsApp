@@ -21,6 +21,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.iak.iaknewsapp.R;
+import id.iak.iaknewsapp.local.DbOpenHelper;
 import id.iak.iaknewsapp.model.ArticlesItem;
 
 public class DetailActivity extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String KEY_EXTRA_NEWS = "news";
     private ArticlesItem mArticlesItem;
     private boolean mIsNewsSaved = false;
+    private DbOpenHelper mDbHelper;
 
     // method untuk memulai DetailActivity
     public static void start(Context context, String newsJson){
@@ -63,6 +65,18 @@ public class DetailActivity extends AppCompatActivity {
 
         setupActionBar();
         setupFab();
+
+        // database operation
+        mDbHelper = new DbOpenHelper(getApplicationContext());
+        mIsNewsSaved = mDbHelper.isNewsSavedAsFavorite(mArticlesItem.getUrl());
+        if (mIsNewsSaved){
+            // news saved as favorite
+            Toast.makeText(this, "Saved as favorite", Toast.LENGTH_SHORT).show();
+            fabFavorite.setImageResource(R.drawable.ic_action_love_full);
+        } else {
+            Toast.makeText(this, "Not saved", Toast.LENGTH_SHORT).show();
+            fabFavorite.setImageResource(R.drawable.ic_action_love_empty);
+        }
     }
 
     @Override
@@ -111,8 +125,14 @@ public class DetailActivity extends AppCompatActivity {
         fabFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mIsNewsSaved){
+                    boolean isDeleteSuccess = mDbHelper.deleteNewsItem(mArticlesItem.getUrl());
+                    mIsNewsSaved = !isDeleteSuccess;
+                } else {
+                    mIsNewsSaved = mDbHelper.saveNewsItem(mArticlesItem) > 0;
+                }
+
                 fabFavorite.setImageResource(mIsNewsSaved ? R.drawable.ic_action_love_full : R.drawable.ic_action_love_empty);
-                mIsNewsSaved = !mIsNewsSaved;
             }
         });
     }
