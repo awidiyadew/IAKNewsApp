@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
@@ -71,10 +72,8 @@ public class DetailActivity extends AppCompatActivity {
         mIsNewsSaved = mDbHelper.isNewsSavedAsFavorite(mArticlesItem.getUrl());
         if (mIsNewsSaved){
             // news saved as favorite
-            Toast.makeText(this, "Saved as favorite", Toast.LENGTH_SHORT).show();
             fabFavorite.setImageResource(R.drawable.ic_action_love_full);
         } else {
-            Toast.makeText(this, "Not saved", Toast.LENGTH_SHORT).show();
             fabFavorite.setImageResource(R.drawable.ic_action_love_empty);
         }
     }
@@ -130,6 +129,9 @@ public class DetailActivity extends AppCompatActivity {
                     mIsNewsSaved = !isDeleteSuccess;
                 } else {
                     mIsNewsSaved = mDbHelper.saveNewsItem(mArticlesItem) > 0;
+                    String snackBarText = mIsNewsSaved ? "News saved as favorite" : "Failed to save news";
+                    Snackbar.make(fabFavorite, snackBarText, Snackbar.LENGTH_SHORT)
+                            .show();
                 }
 
                 fabFavorite.setImageResource(mIsNewsSaved ? R.drawable.ic_action_love_full : R.drawable.ic_action_love_empty);
