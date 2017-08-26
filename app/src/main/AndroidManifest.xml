@@ -20,7 +20,8 @@
         </activity>
         <activity android:name="id.iak.iaknewsapp.activity.TesActivity" />
         <activity android:name="id.iak.iaknewsapp.activity._DetailActivity" />
-        <activity android:name="id.iak.iaknewsapp.activity.DetailActivity"></activity>
+        <activity android:name="id.iak.iaknewsapp.activity.DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

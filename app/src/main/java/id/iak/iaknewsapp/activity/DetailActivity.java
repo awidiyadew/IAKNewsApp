@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +17,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,9 +28,13 @@ public class DetailActivity extends AppCompatActivity {
     private static final String TAG = DetailActivity.class.getSimpleName();
     @BindView(R.id.webView) WebView mWebView;
     @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.nestedScrollView) NestedScrollView nestedScrollView;
+    @BindView(R.id.fabFavorite) FloatingActionButton fabFavorite;
 
     private static final String KEY_EXTRA_NEWS = "news";
     private ArticlesItem mArticlesItem;
+    private boolean mIsNewsFavorite = false;
 
     // method untuk memulai DetailActivity
     public static void start(Context context, ArticlesItem articlesItem){
@@ -45,11 +51,11 @@ public class DetailActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra(KEY_EXTRA_NEWS)){
             mArticlesItem = getIntent().getParcelableExtra(KEY_EXTRA_NEWS);
-            Toast.makeText(this, "Show news " + mArticlesItem.getTitle(), Toast.LENGTH_SHORT).show();
             setupWebView();
             mWebView.loadUrl(mArticlesItem.getUrl());
             progressBar.setMax(100);
             setupActionBar();
+            setupFab();
         } else {
             finish();
         }
@@ -82,6 +88,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setupActionBar(){
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar == null){
@@ -97,6 +104,28 @@ public class DetailActivity extends AppCompatActivity {
 
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_action_close);
         actionBar.setHomeAsUpIndicator(drawable);
+    }
+
+    private void setupFab(){
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (oldScrollY > scrollY) {
+                    fabFavorite.show();
+                } else {
+                    fabFavorite.hide();
+                }
+            }
+        });
+
+        fabFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIsNewsFavorite = !mIsNewsFavorite;
+                fabFavorite.setImageResource(mIsNewsFavorite ?
+                        R.drawable.ic_action_love_full : R.drawable.ic_action_love_empty);
+            }
+        });
 
     }
 
