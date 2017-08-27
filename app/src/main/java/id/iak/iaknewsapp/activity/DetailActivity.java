@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.iak.iaknewsapp.R;
+import id.iak.iaknewsapp.database.DbOpenHelper;
 import id.iak.iaknewsapp.model.ArticlesItem;
 
 public class DetailActivity extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String KEY_EXTRA_NEWS = "news";
     private ArticlesItem mArticlesItem;
     private boolean mIsNewsFavorite = false;
+    private DbOpenHelper mDbHelper;
 
     // method untuk memulai DetailActivity
     public static void start(Context context, ArticlesItem articlesItem){
@@ -49,16 +51,18 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
 
-        if (getIntent().hasExtra(KEY_EXTRA_NEWS)){
-            mArticlesItem = getIntent().getParcelableExtra(KEY_EXTRA_NEWS);
-            setupWebView();
-            mWebView.loadUrl(mArticlesItem.getUrl());
-            progressBar.setMax(100);
-            setupActionBar();
-            setupFab();
-        } else {
+        mDbHelper = new DbOpenHelper(getApplicationContext());
+
+        if (!getIntent().hasExtra(KEY_EXTRA_NEWS)){
             finish();
         }
+
+        mArticlesItem = getIntent().getParcelableExtra(KEY_EXTRA_NEWS);
+        setupWebView();
+        mWebView.loadUrl(mArticlesItem.getUrl());
+        progressBar.setMax(100);
+        setupActionBar();
+        setupFab();
 
     }
 
@@ -121,9 +125,12 @@ public class DetailActivity extends AppCompatActivity {
         fabFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIsNewsFavorite = !mIsNewsFavorite;
+
+                mIsNewsFavorite = mDbHelper.saveNewsItem(mArticlesItem);
+
                 fabFavorite.setImageResource(mIsNewsFavorite ?
                         R.drawable.ic_action_love_full : R.drawable.ic_action_love_empty);
+
             }
         });
 
