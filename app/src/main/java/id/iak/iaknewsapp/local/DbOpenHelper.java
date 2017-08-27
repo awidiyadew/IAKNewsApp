@@ -6,12 +6,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import id.iak.iaknewsapp.local.DbContract.NewsItemContract;
 import id.iak.iaknewsapp.model.ArticlesItem;
 
 public class DbOpenHelper extends SQLiteOpenHelper {
 
+    private static final String TAG = DbOpenHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "IAKNews";
     private static final int DATABASE_VERSION = 1;
 
@@ -87,6 +92,54 @@ public class DbOpenHelper extends SQLiteOpenHelper {
         int totalRow = cursor.getCount();
         db.close();
         return totalRow > 0;
+    }
+
+    public List<ArticlesItem> getFavoriteNews(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        /* select * from table*/
+        Cursor cursor = db.query(
+                NewsItemContract.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        int resultCount = cursor.getCount();
+        Log.d(TAG, "getFavoriteNews: ");
+
+        List<ArticlesItem> articlesItems = new ArrayList<>();
+        if (resultCount > 0){
+            cursor.moveToFirst();
+            do {
+                String url = cursor.getString(cursor.getColumnIndex(NewsItemContract.URL));
+                String title = cursor.getString(cursor.getColumnIndex(NewsItemContract.TITLE));
+                String desc = cursor.getString(cursor.getColumnIndex(NewsItemContract.DESC));
+                String img_url = cursor.getString(cursor.getColumnIndex(NewsItemContract.IMG_URL));
+                String author = cursor.getString(cursor.getColumnIndex(NewsItemContract.AUTHOR));
+                String published_at = cursor.getString(cursor.getColumnIndex(NewsItemContract.PUBLISH_AT));
+
+                ArticlesItem item = new ArticlesItem();
+                item.setUrl(url);
+                item.setTitle(title);
+                item.setDescription(desc);
+                item.setUrlToImage(img_url);
+                item.setAuthor(author);
+                item.setPublishedAt(published_at);
+
+                articlesItems.add(item);
+                Log.d(TAG, "getFavoriteNews: news " + item.getTitle());
+            }
+            while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return articlesItems;
     }
 
 }
